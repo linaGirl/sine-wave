@@ -1,7 +1,7 @@
 # Javascript Sine Wave Renderer
 
 
-````Javascript
+````typescript
 import SineWaveRenderer from './src/SineWaveRenderer.js';
 
 

@@ -1,0 +1,18 @@
+{
+  "name": "simple-sine-waves",
+  "version": "1.0.0",
+  "description": "Sine Wave renderer",
+  "main": "dist/SineWaveRenderer.js",
+  "scripts": {
+    "build": "node ./node_modules/.bin/tsc",
+    "clean": "rm -r build"
+  },
+  "author": "Lina van der Weg",
+  "license": "MIT",
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.4",
+    "eslint": "^9.12.0",
+    "typescript": "^5.6.2"
+  },
+  "type": "module"
+}

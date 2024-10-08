@@ -6,11 +6,35 @@
  *
  * @class      Wave
  */
+
+
+export type WaveType = 'sine' | 'square' | 'sawTooth' | 'triangle';
+
+export interface WaveOptions {
+    speed: number;
+    amplitude: number;
+    wavelength: number;
+    segmentLength?: number;
+    lineWidth?: number;
+    strokeStyle?: string | CanvasGradient | CanvasPattern;
+    type?: WaveType;
+    easingFunction?: (percent: number, amplitude: number) => number;
+}
+
 export default class Wave {
 
+    static types : WaveType[] = ['sine', 'square', 'sawTooth', 'triangle'];
+    static PI2 : number = Math.PI * 2;
 
-    static types = ['sine', 'square', 'sawTooth', 'triangle'];
-    static PI2 = Math.PI * 2;
+    speed: number;
+    amplitude: number;
+    wavelength: number;
+    segmentLength: number;
+    lineWidth: number;
+    strokeStyle: string | CanvasGradient | CanvasPattern;
+    type: WaveType;
+    easingFunction: (percent: number, amplitude: number) => number;
+    compute: (x: number) => number;
 
 
     constructor({
@@ -22,35 +46,36 @@ export default class Wave {
         strokeStyle = 'rgba(0, 0, 0, 0.2)',
         type = 'sine',
         easingFunction,
-    }) {
+    } : WaveOptions) {
         this.setSpeed(speed);
         this.setAmplitude(amplitude);
         this.setWavelength(wavelength);
         this.setSegmentLength(segmentLength);
         this.setlineWidth(lineWidth);
         this.setStrokeStyle(strokeStyle);
+        // @ts-ignore
         this.setEasingFunction(easingFunction);
         this.setType(type);
     }
 
 
 
-    sine(x) {
+    sine(x: number) : number {
         return Math.sin(x);
     }
 
 
-    square(x) {
+    square(x: number) : number {
         return Math.sign(Math.sin(x * Wave.PI2));
     }
 
 
-    sawTooth(x) {
+    sawTooth(x: number) : number {
         return (x - Math.floor(x + 0.5)) * 2;
     }
 
 
-    triangle(x) {
+    triangle(x: number) : number {
         return Math.abs(this.sawTooth(x));
     }
 
@@ -60,7 +85,7 @@ export default class Wave {
      *
      * @param      {function}  type  The type
      */
-    setType(type) {
+    setType(type: WaveType) : void {
         if (typeof type !== 'string') {
             throw new Error(`Invalid wave option 'type': expected a string!`);
         }
@@ -79,7 +104,7 @@ export default class Wave {
      *
      * @param      {function}  easingFunction  The easingFunction
      */
-    setEasingFunction(easingFunction) {
+    setEasingFunction(easingFunction: (percent: number, amplitude: number) => number) {
         if (typeof easingFunction !== 'function') {
             throw new Error(`Invalid wave option 'strokeStyle': expected a function!`);
         }
@@ -93,7 +118,7 @@ export default class Wave {
      *
      * @param      {string}  strokeStyle  The strokeStyle
      */
-    setStrokeStyle(strokeStyle) {
+    setStrokeStyle(strokeStyle: string | CanvasGradient | CanvasPattern) : void {
         if (typeof strokeStyle !== 'string') {
             throw new Error(`Invalid wave option 'strokeStyle': expected a string!`);
         }
@@ -107,7 +132,7 @@ export default class Wave {
      *
      * @param      {number}  lineWidth  The lineWidth
      */
-    setlineWidth(lineWidth) {
+    setlineWidth(lineWidth: number) : void {
         if (typeof lineWidth !== 'number') {
             throw new Error(`Invalid wave option 'lineWidth': expected a number!`);
         }
@@ -121,7 +146,7 @@ export default class Wave {
      *
      * @param      {number}  segmentLength  The segmentLength
      */
-    setSegmentLength(segmentLength) {
+    setSegmentLength(segmentLength: number) : void {
         if (typeof segmentLength !== 'number') {
             throw new Error(`Invalid wave option 'segmentLength': expected a number!`);
         }
@@ -135,7 +160,7 @@ export default class Wave {
      *
      * @param      {number}  wavelength  The wavelength
      */
-    setWavelength(wavelength) {
+    setWavelength(wavelength: number) : void {
         if (typeof wavelength !== 'number') {
             throw new Error(`Invalid wave option 'wavelength': expected a number!`);
         }
@@ -149,7 +174,7 @@ export default class Wave {
      *
      * @param      {number}  amplitude  The amplitude
      */
-    setAmplitude(amplitude) {
+    setAmplitude(amplitude : number) : void {
         if (typeof amplitude !== 'number') {
             throw new Error(`Invalid wave option 'amplitude': expected a number!`);
         }
@@ -163,7 +188,7 @@ export default class Wave {
      *
      * @param      {number}  speed   The speed
      */
-    setSpeed(speed) {
+    setSpeed(speed : number) : void {
         if (typeof speed !== 'number') {
             throw new Error(`Invalid wave option 'speed': expected a number!`);
         }

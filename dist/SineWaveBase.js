@@ -1,34 +1,8 @@
 import EasingFunctions from './EasingFunctions.js';
 import Wave from './Wave.js';
-
-
-/**
- * Base class for the SineWaveRenderer class which provides utility functions
- * and input validation
- *
- * @author     Lina van der Weg <lina@vanderweg.ch>
- * @license    MIT
- *
- * @class      SineWaveBase
- */
 export default class SineWaveBase {
-
-
-    constructor({
-        element,
-        waves,
-        width,
-        height,
-        displayWidth,
-        resizeHandler,
-        easingFunction,
-        rotation = 0,
-        speed = 1,
-        paused = false,
-        gradient,
-    }) {
+    constructor({ element, waves, width, height, displayWidth, resizeHandler, easingFunction, rotation = 0, speed = 1, paused = false, gradient, }) {
         this.paused = paused;
-
         this.setElement(element);
         this.setWidth(width);
         this.setHeight(height);
@@ -40,38 +14,29 @@ export default class SineWaveBase {
         this.setSpeed(speed);
         this.setGradient(gradient);
     }
-
-
     setGradient(gradient) {
-        if (!gradient) return;
+        if (!gradient)
+            return;
         if (!Array.isArray(gradient)) {
             throw new Error(`Invalid 'gradient' options: expected an array!`);
         }
-
         this.gratdientColorStops = [];
-
         for (const colorStop of gradient) {
             if (typeof colorStop !== 'object' || colorStop === null || colorStop.position === undefined || colorStop.rgbaValue === undefined) {
                 throw new Error(`Invalid gradient entry: expected an object containg a position and a rgbaValue!`);
             }
-
             this.gratdientColorStops.push({
                 position: colorStop.position,
                 rgbaValue: colorStop.rgbaValue,
             });
         }
     }
-
-
     setSpeed(speed) {
         if (typeof speed !== 'number') {
             throw new Error(`Invalid option 'speed': expected a number!`);
         }
-
         this.speed = speed;
     }
-
-
     /**
      * Sets the rotation.
      *
@@ -81,12 +46,8 @@ export default class SineWaveBase {
         if (typeof rotation !== 'number' || rotation < 0 || rotation >= 360) {
             throw new Error(`Invalid option 'roation'. Expected a number between 0 and 359!`);
         }
-
         this.rotation = EasingFunctions.degreesToRadians(rotation);
     }
-
-
-
     /**
      * Sets the easing function.
      *
@@ -95,8 +56,6 @@ export default class SineWaveBase {
     setEasingFunction(fn) {
         this.easingFunction = this.getEasingFunction(fn);
     }
-
-
     /**
      * Gets the easing function.
      *
@@ -106,16 +65,17 @@ export default class SineWaveBase {
     getEasingFunction(fn) {
         if (typeof fn === 'function') {
             return fn;
-        } else if (typeof fn === 'string') {
+        }
+        else if (typeof fn === 'string') {
             if (EasingFunctions.hasFunction(fn)) {
                 return EasingFunctions.getFunction(fn);
-            } else {
+            }
+            else {
                 throw new Error(`Invalid easingFunction option '${fn}'. Expected one of ${EasingFunctions.functionNames.join(', ')}!`);
             }
         }
+        return EasingFunctions.static;
     }
-
-
     /**
      * Gets the viewport width.
      *
@@ -126,8 +86,6 @@ export default class SineWaveBase {
     getViewportWidth() {
         return window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
     }
-
-
     /**
      * Gets the viewport height.
      *
@@ -138,8 +96,6 @@ export default class SineWaveBase {
     getViewportHeight() {
         return window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
     }
-
-
     /**
      * Sets and validates the width option passed to the constructor
      *
@@ -150,8 +106,6 @@ export default class SineWaveBase {
     setWidth(width) {
         this.setWidthOrHeight(true, width);
     }
-
-
     /**
      * Sets and validates the height option passed to the constructor
      *
@@ -162,8 +116,6 @@ export default class SineWaveBase {
     setHeight(height) {
         this.setWidthOrHeight(false, height);
     }
-
-
     /**
      * Sets and validates the height or width option passed to the constructor
      *
@@ -174,32 +126,31 @@ export default class SineWaveBase {
      */
     setWidthOrHeight(isWidth = true, value) {
         const identifier = isWidth ? 'width' : 'height';
-
         if (typeof value === 'number') {
             if (Number.isNaN(value)) {
                 throw new Error(`Expected the option '${identifier}' to be a number. NaN given!`);
             }
-
             this[`${identifier}Value`] = value;
-        } else if (typeof value === 'function') {
+        }
+        else if (typeof value === 'function') {
             const testNumber = value();
-
             if (typeof testNumber !== 'number' || Number.isNaN(testNumber)) {
                 throw new Error(`The function provided for the '${identifier}' option returns not a valid number!`);
             }
-
+            // @ts-ignore
             this[`${identifier}Function`] = value;
-        } else if (value !== undefined) {
+        }
+        else if (value !== undefined) {
             throw new Error(`Invalid '${identifier}' option. Expected a number or a function returning a number!`);
-        } else {
+        }
+        else {
+            // @ts-ignore
             this[`${identifier}Function`] = this[`getViewport${identifier[0].toUpperCase()}${identifier.slice(1)}`];
         }
     }
-
-
     /**
      * Sets the resize event handler.
-     * 
+     *
      * @private
      *
      * @param      {function}  handler  The handler
@@ -207,12 +158,11 @@ export default class SineWaveBase {
     setResizeEventHandler(handler) {
         if (typeof handler === 'function') {
             this.resizeHandler = handler;
-        } else if (handler !== undefined) {
+        }
+        else if (handler !== undefined) {
             throw new Error(`Inavlid 'resizeHandler' option. Expected a function!`);
         }
     }
-
-
     /**
      * set and validate the waves options passed to the constructor
      *
@@ -224,14 +174,11 @@ export default class SineWaveBase {
         if (!Array.isArray(waves) || !waves.length) {
             throw new Error(`Missing or invalid option 'waves'. Expected an Array with wave configurations!`);
         }
-
         this.waves = [];
-
         for (const configuration of waves) {
             if (typeof configuration !== 'object') {
                 throw new Error(`Expected an object as wave configuration!`);
             }
-
             const wave = new Wave({
                 speed: configuration.speed,
                 amplitude: configuration.amplitude,
@@ -240,16 +187,13 @@ export default class SineWaveBase {
                 lineWidth: configuration.lineWidth,
                 strokeStyle: configuration.strokeStyle,
                 type: configuration.type,
-                easingFunction: configuration.easingFunction ? 
-                    this.getEasingFunction(configuration.easingFunction) : 
+                easingFunction: configuration.easingFunction ?
+                    this.getEasingFunction(configuration.easingFunction) :
                     this.easingFunction,
             });
-
             this.waves.push(wave);
         }
     }
-
-
     /**
      * set and validate the element passed to the constructor
      *
@@ -263,11 +207,9 @@ export default class SineWaveBase {
         }
         this.element = element;
     }
-
-
     /**
      * Sets the display width.
-     * 
+     *
      * @privvate
      *
      * @param      {string}  displayWidth  The display width
@@ -276,21 +218,24 @@ export default class SineWaveBase {
         if (typeof displayWidth === 'string') {
             if (displayWidth.trim().endsWith('px')) {
                 this.displayWidth = parseInt(displayWidth, 10);
-            } else if (displayWidth.trim().endsWith('%')) {
+            }
+            else if (displayWidth.trim().endsWith('%')) {
                 let value = parseFloat(displayWidth);
-                if (value > 1) value /= 100;
+                if (value > 1)
+                    value /= 100;
                 this.displayWidthPercentage = value;
-            } else {
+            }
+            else {
                 throw new Error(`Option 'displayWidth' is invalid. Expexted px or % value or a number!`);
             }
-        } else if (typeof displayWidth === 'number') {
+        }
+        else if (typeof displayWidth === 'number') {
             this.displayWidth = displayWidth;
-        } else {
+        }
+        else {
             throw new Error(`Missing 'displayWidth' option. Expected a string with a px or % value!`);
         }
     }
-
-
     /**
      * Determines whether the specified object is dom element.
      *
@@ -299,12 +244,13 @@ export default class SineWaveBase {
      * @param      {object}   object  The object
      * @return     {boolean}  True if the specified object is dom element, False otherwise.
      */
-    isDOMElement(object){
-        return typeof HTMLElement === "object" ? 
-            object instanceof HTMLElement : 
-            object && typeof object === "object" && 
-                object !== null && 
-                object.nodeType === 1 && 
-                typeof object.nodeName==="string";
+    isDOMElement(object) {
+        return typeof HTMLElement === "object" ?
+            object instanceof HTMLElement :
+            object && typeof object === "object" &&
+                object !== null &&
+                object.nodeType === 1 &&
+                typeof object.nodeName === "string";
     }
 }
+//# sourceMappingURL=SineWaveBase.js.map
