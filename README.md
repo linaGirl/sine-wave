@@ -1,14 +1,14 @@
 # Javascript Sine Wave Renderer
 
+![alt text](https://github.com/linaGirl/sine-wave/blob/master/wave.png?raw=true)
 
 ````typescript
-import SineWaveRenderer from './src/SineWaveRenderer.js';
-
+import SineWaveRenderer from 'simple-sine-waves';
 
 window.addEventListener('DOMContentLoaded', () => {
     const renderer = new SineWaveRenderer({
         element: document.getElementById('test'), // some canvas element
-        displayWidth: '90%',
+        displayWidth: '100%',
         waves: [{
             amplitude: -200,
             wavelength: 100,
