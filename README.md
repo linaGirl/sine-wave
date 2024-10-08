@@ -1,4 +1,4 @@
-# Javascript Sine Wave Renderer
+# TypeScript Sine Wave Renderer
 
 ![alt text](https://github.com/linaGirl/sine-wave/blob/master/wave.png?raw=true)
 
