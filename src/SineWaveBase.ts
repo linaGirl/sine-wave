@@ -54,7 +54,7 @@ export default class SineWaveBase {
         waves,
         width,
         height,
-        displayWidth,
+        displayWidth = '100%',
         resizeHandler,
         easingFunction,
         rotation = 0,

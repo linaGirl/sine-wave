@@ -4,15 +4,18 @@
   "description": "Sine Wave renderer",
   "main": "dist/SineWaveRenderer.js",
   "scripts": {
+    "dev": "vite --host",
     "build": "node ./node_modules/.bin/tsc",
-    "clean": "rm -r build"
+    "clean": "rm -r dist"
   },
   "author": "Lina van der Weg",
   "license": "MIT",
   "devDependencies": {
     "@tsconfig/node18": "^18.2.4",
+    "@types/node": "^22.7.5",
     "eslint": "^9.12.0",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8"
   },
   "type": "module"
 }

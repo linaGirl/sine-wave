@@ -1,6 +1,39 @@
 # TypeScript Animated Sine Wave Renderer
 
+Easy sine wave rendering without any dependencies.
+
 ![alt text](https://github.com/linaGirl/sine-wave/blob/master/wave.png?raw=true)
+
+Options for waves
+```typescript
+
+// easing
+export type EasingFunctionName = 'static' | 'sineIn' | 'sineOut' | 'sineInOut';
+export type TEasingFunction = (percent: number, amplitude: number) => number;
+
+// wave types
+export type WaveType = 'sine' | 'square' | 'sawTooth' | 'triangle';
+
+// color gradient
+export interface GradientColorStop {
+    position: number;
+    rgbaValue: string;
+}
+
+// wave options type
+export interface WaveOption {
+    speed: number;
+    amplitude: number;
+    wavelength: number;
+    easingFunction?: EasingFunctionName | TEasingFunction;
+    segmentLength?: number;
+    lineWidth?: number;
+    strokeStyle?: string | CanvasGradient | CanvasPattern;
+    type?: WaveType;
+}
+```
+
+Example for the image above
 
 ````typescript
 import SineWaveRenderer from 'simple-sine-waves';
@@ -56,3 +89,12 @@ window.addEventListener('DOMContentLoaded', () => {
     renderer.render();
 });
 ````
+
+
+Some variations
+
+
+![alt text](https://github.com/linaGirl/sine-wave/blob/master/example-1.png?raw=true)
+![alt text](https://github.com/linaGirl/sine-wave/blob/master/example-2.png?raw=true)
+![alt text](https://github.com/linaGirl/sine-wave/blob/master/example-3.png?raw=true)
+![alt text](https://github.com/linaGirl/sine-wave/blob/master/example-4.png?raw=true)
