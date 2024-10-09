@@ -1,7 +1,7 @@
 import EasingFunctions from './EasingFunctions.js';
 import Wave from './Wave.js';
 export default class SineWaveBase {
-    constructor({ element, waves, width, height, displayWidth, resizeHandler, easingFunction, rotation = 0, speed = 1, paused = false, gradient, }) {
+    constructor({ element, waves, width, height, displayWidth = '100%', resizeHandler, easingFunction, rotation = 0, speed = 1, paused = false, gradient, }) {
         this.paused = paused;
         this.setElement(element);
         this.setWidth(width);

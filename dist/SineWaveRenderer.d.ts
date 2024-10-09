@@ -1,5 +1,6 @@
+import { EasingFunctionName, TEasingFunction } from './EasingFunctions.js';
 import SineWaveBase, { GradientColorStop } from './SineWaveBase.js';
-import Wave from './Wave.js';
+import Wave, { WaveType } from './Wave.js';
 /**
  * SineWaveRenderer, the main class of the project. See the readme for more
  * information
@@ -13,11 +14,16 @@ export interface WaveOption {
     speed: number;
     amplitude: number;
     wavelength: number;
+    easingFunction?: EasingFunctionName | TEasingFunction;
+    segmentLength?: number;
+    lineWidth?: number;
+    strokeStyle?: string | CanvasGradient | CanvasPattern;
+    type?: WaveType;
 }
 export interface SineWaveOptions {
     element: HTMLCanvasElement;
     waves: WaveOption[];
-    displayWidth: number | string;
+    displayWidth?: number | string;
     gradient: GradientColorStop[];
 }
 export default class SineWaveRenderer extends SineWaveBase {
