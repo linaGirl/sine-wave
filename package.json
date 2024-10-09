@@ -10,6 +10,10 @@
   },
   "author": "Lina van der Weg",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/linaGirl/sine-wave"
+  },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.4",
     "@types/node": "^22.7.5",
