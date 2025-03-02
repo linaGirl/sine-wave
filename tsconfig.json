@@ -18,6 +18,6 @@
         "es2020", "DOM"
       ]
     },
-    "include": ["src/**/*", "index.ts", "run-service.ts", "countries.ts"],
+    "include": ["src/**/*", "index.ts", "run-service.ts", "countries.ts", "www/main.ts"],
     "exclude": ["node_modules", "**/*.spec.ts"]
   }

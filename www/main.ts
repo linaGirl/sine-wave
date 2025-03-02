@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', async() => {
     const baseWave : Partial<WaveOption> = {
         easingFunction: 'sineInOut',
         segmentLength: 2,
-        lineWidth: 10,
+        lineWidth: 2,
         strokeStyle: 'rgba(255, 255, 255, 0.2)',
         type: 'sine',
     }
